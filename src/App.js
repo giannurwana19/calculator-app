@@ -2,7 +2,7 @@ import { useReducer } from 'react';
 import './App.css';
 import DigitButton from './components/DigitButton';
 import OperationButton from './components/OperationButton';
-import reducer from './store/reducer';
+import reducer, { formatOperand } from './store/reducer';
 import ACTIONS from './store/actions';
 
 function App() {
@@ -15,9 +15,9 @@ function App() {
     <div className="calculator-grid">
       <div className="output">
         <div className="previous-operand">
-          {previousOperand} {operation}
+          {formatOperand(previousOperand)} {operation}
         </div>
-        <div className="current-operand">{currentOperand}</div>
+        <div className="current-operand">{formatOperand(currentOperand)}</div>
       </div>
       <button
         className="span-two"
