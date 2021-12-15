@@ -2,24 +2,31 @@ import { useReducer } from 'react';
 import './App.css';
 import DigitButton from './components/DigitButton';
 import OperationButton from './components/OperationButton';
-import initialState from './store/initialState';
 import reducer from './store/reducer';
+import ACTIONS from './store/actions';
 
 function App() {
   const [{ currentOperand, previousOperand, operation }, dispatch] = useReducer(
     reducer,
-    initialState
+    {}
   );
 
   return (
     <div className="calculator-grid">
       <div className="output">
-        {previousOperand} {operation}
-        <div className="previous-operand"></div>
+        <div className="previous-operand">
+          {previousOperand} {operation}
+        </div>
         <div className="current-operand">{currentOperand}</div>
       </div>
-      <button className="span-two">AC</button>
-      <button>DEL</button>
+      <button
+        className="span-two"
+        onClick={() => dispatch({ type: ACTIONS.CLEAR })}>
+        AC
+      </button>
+      <button onClick={() => dispatch({ type: ACTIONS.DELETE_DIGIT })}>
+        DEL
+      </button>
       <OperationButton operation="÷" dispatch={dispatch} />
       <DigitButton digit="1" dispatch={dispatch} />
       <DigitButton digit="2" dispatch={dispatch} />
@@ -35,7 +42,11 @@ function App() {
       <OperationButton operation="-" dispatch={dispatch} />
       <DigitButton digit="." dispatch={dispatch} />
       <DigitButton digit="0" dispatch={dispatch} />
-      <button className="span-two">=</button>
+      <button
+        className="span-two"
+        onClick={() => dispatch({ type: ACTIONS.EVALUATE })}>
+        =
+      </button>
     </div>
   );
 }
